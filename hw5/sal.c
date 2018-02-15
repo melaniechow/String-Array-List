@@ -5,7 +5,7 @@
 
 #include "sal.h"
 #include <stdio.h>
-#include <strings.h>
+#include <string.h>
 #include <stdlib.h>
 
 sal *list_new()
