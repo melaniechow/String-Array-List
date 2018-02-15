@@ -309,7 +309,7 @@ sal *filter(sal *list, int(*test)(char*))
   char **arr = list->values;
   for (int i=0; i<len; i++){
     if (test(arr[i]) == 0){
-      //free(arr[i]);
+      free(arr[i]);
       arr[i]=NULL;
     }
   }
