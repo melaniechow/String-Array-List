@@ -309,9 +309,9 @@ int main()
   fprintf(stdout,"Expecting [] (Empty SAL)\n");
   evidence_filter(test2,filTest);
 
-  free_list(test1);
-  free_list(test2);
-  free_list(test3);
+  list_free(test1);
+  list_free(test2);
+  list_free(test3);
 
   return 0;
 }
