@@ -96,12 +96,12 @@ void evidence_act_on_strings(sal *list, void(*f)(char*))
   fprintf(stdout,"\n");
 
 }
-/*
+
 void first_char_replace(char* str)
 {
   str[0]='#';
 }
-*/
+
 void evidence_filter(sal *list, int(*test)(char*))
 {
   filter(list, test);
@@ -141,7 +141,7 @@ int main()
 
   fprintf(stdout, "*** Testing list_new ***\n");
   fprintf(stdout,"Empty Array List - Expecting [] \n");
-  //evidence_list_new();
+  evidence_list_new();
 
   ///////////////////////////////////////////////////////////////////////
 
@@ -284,7 +284,6 @@ int main()
   fprintf(stdout,"Expecting [] (Empty SAL)\n");
   evidence_remove_all(test2, "waZOO!");
 
-/*
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing act_on_strings ***\n");
 
@@ -309,7 +308,6 @@ int main()
 
   fprintf(stdout,"Expecting [] (Empty SAL)\n");
   evidence_filter(test2,filTest);
-*/
 
   free_list(test1);
   free_list(test2);

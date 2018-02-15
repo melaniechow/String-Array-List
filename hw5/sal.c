@@ -259,7 +259,7 @@ sal *remove_first(sal *list, char *sought_val)
     newValues[i]=strdup(oldValues[i]);
   }
 
-  //free(oldValues[index]);
+  free(oldValues[index]);
 
   //overwrite position and copy remaining values
   for (int i=index; i < len -1; i++){
