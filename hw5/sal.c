@@ -240,16 +240,55 @@ sal *insert_at_index(sal *list, size_t index, char *new_val)
  * if one exists, freeing its string.  If there is no such occurrence,
  * return NULL.
  */
-sal *remove_first(sal *list, char *sought_val);
+sal *remove_first(sal *list, char *sought_val)
+{
+  //get index of sought_val
+  int index=find_first(list,sought_val);
+  if (index==-1){
+    return NULL;
+  }
+
+  //create new variables
+  size_t len = list->num_items;
+  char** oldValues=list->values;
+  size_t newsize=len-1;
+  char **newValues = malloc(sizeof(char*) * newsize);
+
+  //copy contents into new array until index of sought-value;
+  for (int i=0; i<index; i++){
+    newValues[i]=strdup(oldValues[i]);
+  }
+
+  //overwrite position and copy remaining values
+  for (int i=index; i < len -1; i++){
+    newValues[i]=strdup(oldValues[i+1]);
+  }
+
+  //assign new array & size
+  list->values=newValues;
+  list->num_items=newsize;
+
+  //free old array
+  for (int i =0; i<len ; i++){
+    free(oldValues[i]);
+  }
+  free(oldValues);
+
+  return list;
+}
 
 /* Remove occurrences of sought_val, freeing the strings. If there is
  * no such occurrence, return NULL.
  */
-sal *remove_all(sal *list, char *sought_val);
+sal *remove_all(sal *list, char *sought_val)
+{
+  //Check if sought_val is present
+  while (find_first(list,sought_val) != -1){
+    remove_first(list,sought_val);
+  }
+  return list;
+}
 
-/* Perform the given action on every item in the list.
- * Act on the strings in place; this should not build a new list.
- */
 sal *act_on_strings(sal *list, void(*f)(char*))
 {
   size_t len=list->num_items;
@@ -263,4 +302,16 @@ sal *act_on_strings(sal *list, void(*f)(char*))
 /* Remove from the list and free every string that does not pass the test.
  * Do not allocate a new array list.
  */
-sal *filter(sal *list, int(*test)(char*));
+
+sal *filter(sal *list, int(*test)(char*))
+{
+  size_t len=list->num_items;
+  char **arr = list->values;
+  for (int i=0; i<len; i++){
+    if (test(arr[i]) == 0){
+      free(arr[i]);
+      arr[i]=NULL;
+    }
+  }
+  return list;
+}
