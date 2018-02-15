@@ -296,6 +296,7 @@ int main()
   evidence_act_on_strings(test2, actTest);
 
   ///////////////////////////////////////////////////////////////////////
+/*
   fprintf(stdout, "*** Testing filter ***\n");
   int(*filTest)(char*)=&less_than_3;
 
@@ -307,8 +308,10 @@ int main()
 
   fprintf(stdout,"Expecting [] (Empty SAL)\n");
   evidence_filter(test2,filTest);
+*/
+  free_list(test1);
+  free_list(test2);
+  free_list(test3);
 
-
-
-return 0;
+  return 0;
 }
