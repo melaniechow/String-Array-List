@@ -12,7 +12,7 @@ void evidence_list_new()
     sal *test=list_new();
     list_show(stdout,test,'|');
     fprintf(stdout,"\n");
-    free(test);
+    //free(test);
 }
 
 void evidence_list_show(FILE *f, sal *list, char sep)
@@ -296,7 +296,7 @@ int main()
   evidence_act_on_strings(test2, actTest);
 
   ///////////////////////////////////////////////////////////////////////
-/*
+
   fprintf(stdout, "*** Testing filter ***\n");
   int(*filTest)(char*)=&less_than_3;
 
@@ -308,7 +308,7 @@ int main()
 
   fprintf(stdout,"Expecting [] (Empty SAL)\n");
   evidence_filter(test2,filTest);
-*/
+
   free_list(test1);
   free_list(test2);
   free_list(test3);
