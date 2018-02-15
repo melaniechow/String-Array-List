@@ -189,20 +189,38 @@ int main()
 
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing insert_after ***\n");
+
+  fprintf(stdout,"Expecting [Alphabet:|Aa|Bb|Cc|Dd|Ee|Ff]\n");
   evidence_insert_after(test1, "Ee", "Ff");
-  evidence_insert_after(test1, "Alphabet:", "Here we go...");
-  evidence_insert_after(test3, "Hiya", "Biyah!");
+
+  fprintf(stdout,"Expecting [Greetings:|Biyah|Hiya]\n");
+  evidence_insert_after(test3, "Greetings:", "Biyah");
+
+  fprintf(stdout,"Expecting Null\n");
+  evidence_insert_after(test2, "", "WaZOO!");
 
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing insert_before ***\n");
-  evidence_insert_before(test1, "Alphabet:", "This is the");
-  evidence_insert_before(test1, "Cc", "What is next? Let's C..");
+
+  fprintf(stdout,"Expecting [This the|Alphabet:|Aa|Bb|Cc|Dd|Ee|Ff]\n");
+  evidence_insert_before(test1, "Alphabet:", "This the");
+  fprintf(stdout,"Expecting Alphabet:|Aa|Bb|What's next? Let's C..|Cc|Dd|Ee|Ff]\n");
+  evidence_insert_before(test1, "Cc", "What's next? Let's C..");
+
+  fprintf(stdout,"Expecting Null\n");
+  evidence_insert_before(test2, "", "WaZOO!");
+
+  fprintf(stdout,"Expecting Null\n");
+  evidence_insert_before (test3, "", "WaZOO!");
 
 
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing insert_at_index ***\n");
-  evidence_insert_at_index(test3,0,"What is a");
-  evidence_insert_at_index(test1, 4, "I'm at pos 4 xD");
+  fprintf(stdout,"Expecting [Warm|Greetings:|Biyah|Hiya]");
+  evidence_insert_at_index(test3,0,"Warm");
+
+  fprintf(stdout,"Expecting Null\n");
+  evidence_insert_at_index(test2, 0, "WaZOO!");
 
 /*
   ///////////////////////////////////////////////////////////////////////
