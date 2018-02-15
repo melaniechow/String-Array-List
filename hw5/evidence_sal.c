@@ -32,6 +32,7 @@ void evidence_find_first(sal *list, char *val)
 {
   int retVal = find_first(list, val);
   fprintf(stdout, "%d", retVal);
+  fprintf(stdout,"\n");
 }
 
 
@@ -196,7 +197,7 @@ int main()
   fprintf(stdout,"Expecting [Greetings:|Biyah|Hiya]\n");
   evidence_insert_after(test3, "Greetings:", "Biyah");
 
-  fprintf(stdout,"Expecting Null\n");
+  fprintf(stdout,"Expecting [] (Empty SAL)\n");
   evidence_insert_after(test2, "", "WaZOO!");
 
   ///////////////////////////////////////////////////////////////////////
@@ -204,22 +205,24 @@ int main()
 
   fprintf(stdout,"Expecting [This the|Alphabet:|Aa|Bb|Cc|Dd|Ee|Ff]\n");
   evidence_insert_before(test1, "Alphabet:", "This the");
-  fprintf(stdout,"Expecting Alphabet:|Aa|Bb|What's next? Let's C..|Cc|Dd|Ee|Ff]\n");
+
+  fprintf(stdout,
+    "Expecting [This the|Alphabet:|Aa|Bb|What's next? Let's C..|Cc|Dd|Ee|Ff]\n");
   evidence_insert_before(test1, "Cc", "What's next? Let's C..");
 
-  fprintf(stdout,"Expecting Null\n");
+  fprintf(stdout,"Expecting [] (Empty SAL)\n");
   evidence_insert_before(test2, "", "WaZOO!");
 
-  fprintf(stdout,"Expecting Null\n");
+  fprintf(stdout,"Expecting [Greetings:|Biyah|Hiya] (no change)\n");
   evidence_insert_before (test3, "", "WaZOO!");
 
 
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing insert_at_index ***\n");
-  fprintf(stdout,"Expecting [Warm|Greetings:|Biyah|Hiya]");
+  fprintf(stdout,"Expecting [Warm|Greetings:|Biyah|Hiya]\n");
   evidence_insert_at_index(test3,0,"Warm");
 
-  fprintf(stdout,"Expecting Null\n");
+  fprintf(stdout,"Expecting [] (Empty SAL)\n");
   evidence_insert_at_index(test2, 0, "WaZOO!");
 
 /*
