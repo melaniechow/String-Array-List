@@ -5,6 +5,7 @@
 #include "sal.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void evidence_list_new()
 {
@@ -96,11 +97,24 @@ void evidence_act_on_strings(sal *list, void(*f)(char*))
 
 }
 
+void first_char_replace(char* str)
+{
+  str[0]='#';
+}
+
 void evidence_filter(sal *list, int(*test)(char*))
 {
   filter(list, test);
   list_show(stdout,list,'|');
   fprintf(stdout,"\n");
+}
+
+int less_than_3 (char* str)
+{
+  if (strlen(str) < 3){
+    return 1;
+  }
+  return 0;
 }
 
 int main()
@@ -272,11 +286,28 @@ int main()
 
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing act_on_strings ***\n");
-  //evidence_act_on_strings(sal *list, void(*f)(char*));
+
+  void(*actTest)(char*)=&first_char_replace;
+
+  fprintf(stdout,"Expecting [#a|#b|#d|#e|#f]\n");
+  evidence_act_on_strings(test1, actTest);
+
+  fprintf(stdout,"Expecting [] (Empty SAL)\n");
+  evidence_act_on_strings(test2, actTest);
 
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing filter ***\n");
-  //evidence_filter(sal *list, int(*test)(char*));
+  int(*filTest)(char*)=&less_than_3;
+
+  fprintf(stdout,"Expecting [#a|#b|#d|#e|#f]\n");
+  evidence_filter(test1,filTest);
+
+  fprintf(stdout,"Expecting [null|null]\n");
+  evidence_filter(test3,filTest);
+
+  fprintf(stdout,"Expecting [] (Empty SAL)\n");
+  evidence_filter(test2,filTest);
+
 
 
 return 0;
