@@ -55,7 +55,7 @@ sal *add_to_front(sal *list, char *val)
     //add to front (0th position)
     newValues[0]=strdup(val);
 
-    //if list wasn't empty, copy remainig values and free old array
+    //copy remainig values and free old array
     for (int i=0; i < len ; i++){
         newValues[i+1]=strdup(oldValues[i]);
     }
