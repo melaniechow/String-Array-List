@@ -46,24 +46,31 @@ void list_show(FILE *f, sal *list, char sep)
 
 sal *add_to_front(sal *list, char *val)
 {
+    //create variables
     size_t len = list->num_items;
     char **oldValues=list->values;
     size_t newsize=len+1;
     char **newValues = malloc(sizeof(char*) * newsize);
 
+    //add to front (0th position)
     newValues[0]=strdup(val);
+
     //if list wasn't empty, copy remainig values and free old array
     if (len!=0){
       //copy any remaining values
       for (int i=0; i < len ; i++){
-        newValues[i+1]=oldValues[i];
+        newValues[i+1]=strdup(oldValues[i]);
       }
-      free(oldValues);
     }
+    //free old array
+    for (int i =0; i<len ; i++){
+      free(oldValues[i]);
+    }
+    free(oldValues);
 
     //assign new array & size
     list->values=newValues;
-    list->num_items+=1;
+    list->num_items=newsize;
 
     return list;
 }
@@ -117,29 +124,32 @@ char *get_at_index(sal *list, size_t index)
  */
 sal *insert_after(sal *list, char *sought_val, char *new_val)
 {
+  //get index of sought_val
   int index=find_first(list,sought_val);
   if (index==-1){
     return NULL;
   }
 
+  //create new variables
   size_t len = list->num_items;
   char** oldValues=list->values;
+  size_t newsize=len+1;
+  char **newValues = malloc(sizeof(char*) * newsize);
 
-  char ** newValues =malloc((len * (sizeof(char))) + sizeof(char));
   //copy contents into new array up to index of sought-val
   for (int i=0; i<=index; i++){
     newValues[i]=strdup(oldValues[i]);
   }
   //add value after index
   newValues[index+1]=strdup(new_val);
-  //add the rest of the values
+  //add the rest of the values after index
   for (int i=index+1; i < len ; i++){
-    newValues[i+i]=oldValues[i];
+    newValues[i+1]=strdup(oldValues[i]);
   }
 
   //assign new array & size
   list->values=newValues;
-  list->num_items+=1;
+  list->num_items=newsize;
 
   //free old array
   for (int i =0; i<len ; i++){
@@ -148,38 +158,37 @@ sal *insert_after(sal *list, char *sought_val, char *new_val)
   free(oldValues);
 
   return list;
-
 }
 
-/* Insert a pointer to a duplicate of new_val before the first
- * occurrence of the sought_val, if sought_val occurs in the list;
- * otherwise return NULL.
- */
+
 sal *insert_before(sal *list, char *sought_val, char *new_val)
 {
+  //get index of sought_val
   int index=find_first(list,sought_val);
   if (index==-1){
     return NULL;
   }
 
+  //create new variables
   size_t len = list->num_items;
   char** oldValues=list->values;
+  size_t newsize=len+1;
+  char **newValues = malloc(sizeof(char*) * newsize);
 
-  //create new array and copy contents up to until the index of sought-val
-  char ** newValues =malloc((len * (sizeof(char))) + sizeof(char));
+  //copy contents into new array until index of sought-value;
   for (int i=0; i<index; i++){
     newValues[i]=strdup(oldValues[i]);
   }
-  //add value
+  //add value before index
   newValues[index]=strdup(new_val);
-  //add the rest of the values
+  //add the rest of the values after index
   for (int i=index; i < len ; i++){
-    newValues[i+i]=oldValues[i];
+    newValues[i+1]=strdup(oldValues[i]);
   }
 
   //assign new array & size
   list->values=newValues;
-  list->num_items+=1;
+  list->num_items=newsize;
 
   //free old array
   for (int i =0; i<len ; i++){
@@ -189,32 +198,34 @@ sal *insert_before(sal *list, char *sought_val, char *new_val)
 
   return list;
 }
+
 
 sal *insert_at_index(sal *list, size_t index, char *new_val)
 {
   size_t len = list->num_items;
   char** oldValues=list->values;
-
   //if index not in list
-  if (index >= len){
+  if (index>=len){
     return NULL;
   }
 
-  //create new array and copy contents up to until the index of sought-val
-  char ** newValues =malloc((len * (sizeof(char))) + sizeof(char));
+  size_t newsize=len+1;
+  char **newValues = malloc(sizeof(char*) * newsize);
+
+  //copy contents into new array up to index of sought-val
   for (int i=0; i<index; i++){
     newValues[i]=strdup(oldValues[i]);
   }
-  //add value
+  //add value after index
   newValues[index]=strdup(new_val);
-  //add the rest of the values
+  //add the rest of the values after index
   for (int i=index; i < len ; i++){
-    newValues[i+i]=oldValues[i];
+    newValues[i+1]=strdup(oldValues[i]);
   }
 
   //assign new array & size
   list->values=newValues;
-  list->num_items+=1;
+  list->num_items=newsize;
 
   //free old array
   for (int i =0; i<len ; i++){
@@ -224,7 +235,6 @@ sal *insert_at_index(sal *list, size_t index, char *new_val)
 
   return list;
 }
-
 
 /* Remove the first pointer containing an occurrence of sought_val,
  * if one exists, freeing its string.  If there is no such occurrence,
