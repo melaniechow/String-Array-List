@@ -264,15 +264,15 @@ sal *remove_first(sal *list, char *sought_val)
     newValues[i]=strdup(oldValues[i+1]);
   }
 
+  //free old array
+  for (int i =0; i<len ; i++){
+    free(list->values[i]);
+  }
+  free(list->values);
+
   //assign new array & size
   list->values=newValues;
   list->num_items=newsize;
-
-  //free old array
-  for (int i =0; i<len ; i++){
-    free(oldValues[i]);
-  }
-  free(oldValues);
 
   return list;
 }
