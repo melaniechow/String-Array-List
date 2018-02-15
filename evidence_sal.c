@@ -186,19 +186,25 @@ int main()
 
   fprintf(stdout,"Expecting Greetings:\n");
   evidence_get_at_index(test3, 0);
-/*
+
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing insert_after ***\n");
-  evidence_insert_after(sal *list, char *sought_val, char *new_val);
+  evidence_insert_after(test1, "Ee", "Ff");
+  evidence_insert_after(test1, "Alphabet:", "Here we go...");
+  evidence_insert_after(test3, "Hiya", "Biyah!");
 
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing insert_before ***\n");
-  evidence_insert_before(sal *list, char *sought_val, char *new_val);
+  evidence_insert_before(test1, "Alphabet:", "This is the");
+  evidence_insert_before(test1, "Cc", "What is next? Let's C..");
+
 
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing insert_at_index ***\n");
-  evidence_insert_at_index(sal *list, size_t index, char *new_val);
+  evidence_insert_at_index(test3,0,"What is a");
+  evidence_insert_at_index(test1, 4, "I'm at pos 4 xD");
 
+/*
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing remove_first ***\n");
   evidence_remove_first(sal *list, char *sought_val);
