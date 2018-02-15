@@ -66,7 +66,7 @@ sal *add_to_front(sal *list, char *val)
     for (int i =0; i<len ; i++){
       free(oldValues[i]);
     }
-    free(oldValues);
+    //free(oldValues);
 
     //assign new array & size
     list->values=newValues;
