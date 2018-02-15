@@ -251,7 +251,7 @@ sal *remove_first(sal *list, char *sought_val)
   //create new variables
   size_t len = list->num_items;
   char** oldValues=list->values;
-  size_t newsize=len--;
+  size_t newsize=len-1;
   char **newValues = malloc(sizeof(char*) * newsize);
 
   //copy contents into new array until index of sought-value;
