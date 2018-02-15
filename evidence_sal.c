@@ -72,11 +72,21 @@ void evidence_insert_at_index(sal *list, size_t index, char *new_val)
   fprintf(stdout,"\n");
 }
 
-/*
-sal *evidence_remove_first(sal *list, char *sought_val);
+void evidence_remove_first(sal *list, char *sought_val)
+{
+  remove_first(list,sought_val);
+  list_show(stdout,list,'|');
+  fprintf(stdout,"\n");
 
-sal *evidence_remove_all(sal *list, char *sought_val);
-*/
+}
+
+void evidence_remove_all(sal *list, char *sought_val)
+{
+  remove_all(list,sought_val);
+  list_show(stdout,list,'|');
+  fprintf(stdout,"\n");
+}
+
 
 void evidence_act_on_strings(sal *list, void(*f)(char*))
 {
@@ -85,14 +95,13 @@ void evidence_act_on_strings(sal *list, void(*f)(char*))
   fprintf(stdout,"\n");
 
 }
-/*
+
 void evidence_filter(sal *list, int(*test)(char*))
 {
-  _filter(list, test);
+  filter(list, test);
   list_show(stdout,list,'|');
   fprintf(stdout,"\n");
 }
-*/
 
 int main()
 {
@@ -206,9 +215,8 @@ int main()
   fprintf(stdout,"Expecting [This the|Alphabet:|Aa|Bb|Cc|Dd|Ee|Ff]\n");
   evidence_insert_before(test1, "Alphabet:", "This the");
 
-  fprintf(stdout,
-    "Expecting [This the|Alphabet:|Aa|Bb|What's next? Let's C..|Cc|Dd|Ee|Ff]\n");
-  evidence_insert_before(test1, "Cc", "What's next? Let's C..");
+  fprintf(stdout,"Expecting [This the|Alphabet:|Aa|Bb|Cc|Cc|Dd|Ee|Ff]\n");
+  evidence_insert_before(test1, "Cc", "Cc");
 
   fprintf(stdout,"Expecting [] (Empty SAL)\n");
   evidence_insert_before(test2, "", "WaZOO!");
@@ -219,29 +227,57 @@ int main()
 
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing insert_at_index ***\n");
+
+  fprintf(stdout,"Expecting [This the|Cc|Alphabet:|Aa|Bb|Cc|Cc|Dd|Ee|Ff]\n");
+  evidence_insert_at_index(test1, 1, "Cc");
+
   fprintf(stdout,"Expecting [Warm|Greetings:|Biyah|Hiya]\n");
   evidence_insert_at_index(test3,0,"Warm");
 
   fprintf(stdout,"Expecting [] (Empty SAL)\n");
   evidence_insert_at_index(test2, 0, "WaZOO!");
 
-/*
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing remove_first ***\n");
-  evidence_remove_first(sal *list, char *sought_val);
+
+  fprintf(stdout,"Expecting [Cc|Alphabet:|Aa|Bb|Cc|Cc|Dd|Ee|Ff]\n");
+  evidence_remove_first(test1, "This the");
+
+  fprintf(stdout,"Expecting [Cc|Aa|Bb|Cc|Cc|Dd|Ee|Ff]\n");
+  evidence_remove_first(test1, "Alphabet:");
+
+  fprintf(stdout,"Expecting [] (Empty SAL)\n");
+  evidence_remove_first(test2, "Werp");
+
+  fprintf(stdout,"Expecting [Warm|Greetings:|Biyah|Hiya]\n");
+  evidence_remove_first(test3, "Werp");
+
+  fprintf(stdout,"Expecting [Warm|Biyah|Hiya]\n");
+  evidence_remove_first(test3, "Greetings:");
+
+  fprintf(stdout,"Expecting [Warm|Hiya]\n");
+  evidence_remove_first(test3, "Biyah");
 
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing remove_all ***\n");
-  evidence_remove_all(sal *list, char *sought_val);
+
+  fprintf(stdout,"Expecting [Aa|Bb|Dd|Ee|Ff]\n");
+  evidence_remove_all(test1, "Cc");
+
+  fprintf(stdout,"Expecting [Warm|Hiya]\n");
+  evidence_remove_all(test3, "Biyah");
+
+  fprintf(stdout,"Expecting [] (Empty SAL)\n");
+  evidence_remove_all(test2, "waZOO!");
 
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing act_on_strings ***\n");
-  evidence_act_on_strings(sal *list, void(*f)(char*));
+  //evidence_act_on_strings(sal *list, void(*f)(char*));
 
   ///////////////////////////////////////////////////////////////////////
   fprintf(stdout, "*** Testing filter ***\n");
-  evidence_filter(sal *list, int(*test)(char*));
-*/
+  //evidence_filter(sal *list, int(*test)(char*));
+
 
 return 0;
 }
